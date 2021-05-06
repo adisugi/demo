@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content-sidebar">
+    <li class="nav-item has-treeview menu-open">
+        <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+                Tabel
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a th:href="@{/user}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Data User</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/transaksi}" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Data Transaksi</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+</div>
+
+<div class="row mb-2" layout:fragment="content-header">
+    <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Transaksi</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+            <li class="breadcrumb-item active">Kelola</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content-body">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List Transaksi</h3>
+                <button class="float-right btn-danger" id="btn-delete-transaksi" data-toggle="tooltip" title="delete table" data-placement="top" style="border-radius: 20%; margin-left: 5px;"><i class="fa fa-trash-alt"></i></button>
+                <button class="float-right btn-primary" id="btn-tambah-transaksi" data-toggle="tooltip" title="tambah" data-placement="top" style="border-radius: 20%;"><i class="fa fa-plus"></i></button>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-striped table-bordered table-hover nowrap" id="tableTransaksi"
+                       style="width:100%"></table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+
+    <div class="modal fade" id="modal-transaksi">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Transaksi</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: #f4f6f9">
+                    <form id="form-transaksi" role="form" enctype="multipart/form-data" method="POST">
+                        <input id="idTransaksi" name="idTransaksi" type="hidden"/>
+<!--                        <input id="idDetail" name="idDetail" type="hidden">-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nama </label>
+                                    <select class="js-example-responsive form-control" style="width: 100%;" id="nama" name="idUser" required>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <input class="form-control" id="alamat" name="alamat"
+                                           placeholder="email" required type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Foto</label>
+                                    <input type="file" class="form-control" id="fileImage" name="file"
+                                           accept="image/png, image/jpeg">
+                                    <div style="margin-top: 30px; border: dashed 1px black">
+                                        <img id="thumbnail" src="#" alt="preview" width="100%">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" id="btn-save-transaksi" type="button">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #212529; color: #fff;">
+                    <div id="modal-header">
+                        <h4>Yakin ingin menghapus data ini?</h4>
+                    </div>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true" style="color: #fff;">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-hidden-id">
+                    <p>Data ini akan hilang setelah mengklik tombol "Delete"</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-danger" id="btn-delete-row" type="button">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+<th:block layout:fragment="add-scripts">
+    <script th:src="@{/js/parsley.min.js}"></script>
+    <script th:src="@{/js/default.js}"></script>
+    <script th:src="@{/js/transaksi.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $('.js-example-responsive').select2({
+            width: 'resolve',
+            height: '100px'
+        });
+
+        // display image preview in form
+        $('#fileImage').change(function () {
+           showImageThumbnail(this)
+        });
+
+        function showImageThumbnail(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#thumbnail').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+    <script>
+        tableTransaksi.create();
+
+        $('#btn-tambah-transaksi').click(function () {
+            formTransaksi.resetForm();
+            $('#modal-transaksi').modal('show')
+        });
+
+        $('#btn-save-transaksi').click(function (event) {
+            formTransaksi.saveForm(event)
+        });
+
+        $('#btn-delete-row').click(function () {
+            actionDelete.deleteRowData();
+        });
+
+        $('#btn-delete-transaksi').click(function () {
+            var h4 =  '<h4>Yakin ingin menghapus tabel ini?</h4>'
+            var p = '<p>Semua data pada tabel akan hilang setelah mengklik tombol "Delete"</p>';
+            $('#modal-header').html(h4)
+            $('#modal-hidden-id').html(p);
+            $('#btn-delete-row').addClass('delete-table')
+            $('#modal-delete').modal('show')
+        });
+
+        $(document).on('click', 'button.delete-table', function () {
+            actionDelete.deleteTable()
+        });
+    </script>
+</th:block>
+
+</html>
+
+
