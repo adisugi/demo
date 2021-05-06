@@ -34,8 +34,8 @@ spring:
 error.path: /error
 
 # HTTP Server
-server:
-  port: 1212
+#server:
+#  port: 1212
 
 
   
