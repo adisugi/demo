@@ -1,41 +1,40 @@
-## Spring properties
-#spring:
-#  application:
-#    name: demo # Identify this application
-#  freemarker:
-#    enabled: false     # Ignore Eureka dashboard FreeMarker templates
-#  thymeleaf:
-#    cache: false       # Allow Thymeleaf templates to be reloaded at runtime
-#    #prefix: classpath:/web-server/templates/    # Trailing / mandatory
-#    # Template location for this application only
-#  datasource:
-##    driver-class-name: org.postgresql.Driver
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-##    url: jdbc:postgresql://localhost:5433/db_coba
-#    url: jdbc:mysql://localhost:3306/db_tabel
-#    username: root
-#    password: admin
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    properties:
-#      hibernate:
-##        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        dialect: org.hibernate.dialect.MySQL5Dialect
-#        jdbc:
-#          lob:
-#            non_contextual_creation: true
-#    show-sql: true
-#  cloud:
-#    refresh:
-#      enabled: false
-#
-## Map the error path to error template (for Thymeleaf)
-#error.path: /error
-#
-## HTTP Server
-##server:
-##  port: 1212
-#
-#
-#
+# Spring properties
+spring:
+  application:
+    name: demo # Identify this application
+  freemarker:
+    enabled: false     # Ignore Eureka dashboard FreeMarker templates
+  thymeleaf:
+    cache: false       # Allow Thymeleaf templates to be reloaded at runtime
+    #prefix: classpath:/web-server/templates/    # Trailing / mandatory
+    # Template location for this application only
+  datasource:
+#    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:postgresql://localhost:5433/db_coba
+    url: jdbc:mysql://localhost:3306/db_tabel
+    username: root
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+  cloud:
+    refresh:
+      enabled: false
+
+# Map the error path to error template (for Thymeleaf)
+error.path: /error
+
+# HTTP Server
+server:
+  port: 1212
+
+
