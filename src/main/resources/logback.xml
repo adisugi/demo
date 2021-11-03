@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- ganti file setiap jam -->
+            <fileNamePattern>
+                ${catalina.home:-.}/logs/%d{yyyy-MM-dd_HH}/demo.log
+            </fileNamePattern>
+
+            <!-- simpan file selama sebulan (24 * 31) -->
+            <maxHistory>384</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STASH"
+              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>103.30.244.186:5000</destination>
+
+        <encoder
+                class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <mdc/> <!-- MDC variables on the Thread will be written as JSON fields -->
+                <context/> <!--Outputs entries from logback's context -->
+                <version/> <!-- Logstash json format version, the @version field in the output -->
+                <logLevel/>
+                <loggerName/>
+
+                <pattern>
+                    <pattern>
+                        {
+                        "serviceName": "dev-demo"
+                        }
+                    </pattern>
+                </pattern>
+
+                <threadName/>
+                <message/>
+                <logstashMarkers/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.security" level="DEBUG">
+<!--        <appender-ref ref="STDOUT" />-->
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <root level="INFO">
+<!--        <appender-ref ref="STDOUT" />-->
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STASH"/>
+    </root>
+
+</configuration>
+

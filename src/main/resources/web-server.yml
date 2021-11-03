@@ -9,19 +9,20 @@ spring:
     #prefix: classpath:/web-server/templates/    # Trailing / mandatory
     # Template location for this application only
   datasource:
-#    driver-class-name: org.postgresql.Driver
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:postgresql://localhost:5433/db_coba
-    url: jdbc:mysql://localhost:3306/db_tabel
-    username: root
+   driver-class-name: org.postgresql.Driver
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+   url: jdbc:postgresql://localhost:5432/db_tabel
+    # url: jdbc:mysql://localhost:3306/db_tabel
+    username: postgres
+    # username: root
     password: admin
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-        dialect: org.hibernate.dialect.MySQL5Dialect
+       dialect: org.hibernate.dialect.PostgreSQLDialect
+        # dialect: org.hibernate.dialect.MySQL5Dialect
         jdbc:
           lob:
             non_contextual_creation: true

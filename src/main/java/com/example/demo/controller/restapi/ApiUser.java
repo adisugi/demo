@@ -4,6 +4,7 @@ import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
+@Slf4j
 public class ApiUser {
     @Autowired
     private UserRepository userRepository;
@@ -25,6 +27,7 @@ public class ApiUser {
 
     @GetMapping()
     public List<UserDto> getListUser() {
+        log.info("tes tes");
         List<User> userList = userRepository.findAll();
         List<UserDto> userDtos =
                 userList.stream()

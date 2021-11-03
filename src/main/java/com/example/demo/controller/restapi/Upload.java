@@ -1,11 +1,11 @@
 package com.example.demo.controller.restapi;
 
 import com.example.demo.model.dto.TransaksiDto;
-import com.example.demo.model.entity.Transaksi;
+// import com.example.demo.model.entity.Transaksi;
 import com.example.demo.repository.TransaksiRepository;
 import com.example.demo.service.TransaksiService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +21,17 @@ import java.nio.file.StandardCopyOption;
 @RestController
 @RequestMapping("/doc")
 public class Upload {
-    @Autowired
+
     private TransaksiService transaksiService;
-
-    @Autowired
     private TransaksiRepository transaksiRepository;
-
-    @Autowired
     private ModelMapper modelMapper;
+
+
+    public Upload(TransaksiService transaksiService, TransaksiRepository transaksiRepository, ModelMapper modelMapper) {
+        this.transaksiService = transaksiService;
+        this.transaksiRepository = transaksiRepository;
+        this.modelMapper = modelMapper;
+    }
 
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
